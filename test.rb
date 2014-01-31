@@ -1,8 +1,9 @@
 require_relative 'maze'
 
-m = Maze.new(9,9)
+m = Maze.new(4,4)
 
 m.load("111111111100010001111010101100010101101110101100000101111011101100000101111111111")
 
-puts m
+m.display
+
 

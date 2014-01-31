@@ -1,8 +1,8 @@
 class Maze
 
 	def initialize (n,m)
-		@width = n
-		@height = m
+		@width = n*2 + 1
+		@height = m*2 + 1
 		@maze_array = Array.new(@height){Array.new(@width){0}}
 	end
 
