@@ -18,14 +18,31 @@ class MazeSolver
 	end
 
 	def find_adjacent(node)
-		puts "To the left of (#{node.x}, #{node.y}) is#{@maze_array[node.y * 2 + 1][node.x * 2]}"
-		node.add_adjacent(@nodes[node.y - 1][node.x]) if @maze_array[node.y * 2][node.x * 2 + 1] == "0"
-		node.add_adjacent(@nodes[node.y + 1][node.x]) if @maze_array[node.y * 2 + 2][node.x * 2 + 1] == "0"
-		node.add_adjacent(@nodes[node.y][node.x + 1]) if @maze_array[node.y * 2 + 1][node.x * 2 + 2] == "0"
-		node.add_adjacent(@nodes[node.y][node.x - 1]) if @maze_array[node.y * 2 + 1][node.x * 2] == "0"
+		node.add_adjacent(@nodes[node.y - 1][node.x]) if @maze_array[node.y * 2][node.x * 2 + 1] == " "
+		node.add_adjacent(@nodes[node.y + 1][node.x]) if @maze_array[node.y * 2 + 2][node.x * 2 + 1] == " "
+		node.add_adjacent(@nodes[node.y][node.x + 1]) if @maze_array[node.y * 2 + 1][node.x * 2 + 2] == " "
+		node.add_adjacent(@nodes[node.y][node.x - 1]) if @maze_array[node.y * 2 + 1][node.x * 2] == " "
 	end
 
 	def solve(begX, begY, endX, endY)
+		clear_all
+		@nodes[begY][begX].visit(nil)
+		return @nodes[endY][endX].visited
+	end
+
+	def trace(begX, begY, endX, endY)
+		node = @nodes[endY][endX]
+		if solve(begX, begY, endX, endY)
+			begin
+				@maze_array[node.y * 2 + 1][node.x * 2 + 1] = "X"
+			end while node = node.predecessor
+		else
+			puts "No Solution"
+		end
+	end
+
+	def clear_all
+		@nodes.each{|row| row.each {|node| node.clear}}
 	end
 end
 
