@@ -28,7 +28,7 @@ class MazeSolver
 		node = @nodes[endY][endX]
 		if solve(begX, begY, endX, endY)
 			begin
-				@maze_array[node.y * 2 + 1][node.x * 2 + 1] = "X"
+				node.node_string = "X"
 			end while node = node.predecessor
 		else
 			puts "No Solution"

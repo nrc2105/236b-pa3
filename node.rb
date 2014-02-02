@@ -1,5 +1,5 @@
 class Node
-
+	attr_accessor :node_string
 	attr_reader :x, :y,:adjacent, :predecessor, :visited
 	def initialize(x, y)
 		@x = x
@@ -7,6 +7,7 @@ class Node
 		@adjacent = []
 		@predecessor = nil
 		@visted = false
+		@node_string = " "
 	end
 
 	def add_adjacent(node)
@@ -21,9 +22,10 @@ class Node
 	def clear
 		@predecessor = nil
 		@visited = false
+		@node_string = " "
 	end
 
 	def to_s
-		"Node at (#{x},#{y}} Adjacent to #{@adjacent.size}"
+		@node_string
 	end
 end
