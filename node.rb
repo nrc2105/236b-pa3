@@ -16,7 +16,7 @@ class Node
 	def visit(predecessor)
 		@predecessor = predecessor
 		@visited = true
-		@adjacent.each{|node| node.visit(self) if !node.visited}
+		#@adjacent.each{|node| node.visit(self) if !node.visited}
 	end
 
 	def clear

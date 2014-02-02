@@ -10,7 +10,7 @@ class Maze
 		@width = n*2 + 1
 		@height = m*2 + 1
 		@maze_array = Array.new(@height){Array.new(@width){0}}
-		construct_default_maze_string
+		@maze_string = construct_default_maze_string
 	end
 
 	#Loads a string of 1s and 0s into the maze_array
@@ -24,7 +24,7 @@ class Maze
 	def construct_default_maze_string
 		top = "+-" * @cell_width + "+"
 		body = "|" + (" |" * @cell_width)
-		@maze_string = top + (body + top) * @cell_height
+		top + (body + top) * @cell_height
 	end
 
 	def maze_format(arg)
@@ -55,4 +55,14 @@ class Maze
 		load(@maze_string)
 	end
 
+	def redesign
+		@maze_string = construct_default_maze_string
+		temp_maze = "1" * @maze_string.size
+		temp_maze.chars.each_index do |c|
+			if c > @width and c < temp_maze.size - @width and c % @width > 0 and c % @width < @width - 1 and ((c / @width % 2 == 0 and c % @width % 2 != 0) ^ (c / @width % 2 != 0 and c % @width % 2 ==0))
+				temp_maze[c] = rand(2).to_s
+			end
+		end
+		load(temp_maze)
+	end
 end
