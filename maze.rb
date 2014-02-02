@@ -27,10 +27,10 @@ class Maze
 	end
 
 	def find_node_adjacency
-		@maze_array.each_index do |j|
-			@maze_array[j].each_index do |i|
-				connect(@maze_array[j - 1][i], @maze_array[j + 1][i]) if @maze_array[j][i] == " "
-				connect(@maze_array[j][i -1], @maze_array[j][i + 1]) if @maze_array[j][i] == " "
+		@maze_array.each_with_index do |row, j|
+			row.each_with_index do |element, i|
+				connect(@maze_array[j - 1][i], @maze_array[j + 1][i]) if element == " "
+				connect(@maze_array[j][i -1], @maze_array[j][i + 1]) if element == " "
 			end
 		end
 	end
