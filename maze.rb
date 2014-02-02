@@ -26,8 +26,8 @@ class Maze
 	end
 
 	def construct_node_matrix
-		@nodes.each_index{|j| @nodes[j].each_index{|i| @nodes[j][i] = Node.new(i, j)}}
-		@maze_array.each_index{|j| @maze_array[j].each_index {|i| @maze_array[j][i] = @nodes[(j-1)/2][(i-1)/2] if j.odd? and i.odd?}}
+		@nodes.each_with_index{|row, j| row.each_index{|i| row[i] = Node.new(i, j)}}
+		@maze_array.each_with_index{|row, j| row.each_index {|i| row[i] = @nodes[(j-1)/2][(i-1)/2] if j.odd? and i.odd?}}
 	end
 
 	def find_node_adjacency
