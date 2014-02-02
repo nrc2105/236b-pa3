@@ -55,14 +55,4 @@ class Maze
 		load(@maze_string)
 	end
 
-	def redesign
-		@maze_string = construct_default_maze_string
-		temp_maze = "1" * @maze_string.size
-		temp_maze.chars.each_index do |c|
-			if c > @width and c < temp_maze.size - @width and c % @width > 0 and c % @width < @width - 1 and ((c / @width % 2 == 0 and c % @width % 2 != 0) ^ (c / @width % 2 != 0 and c % @width % 2 ==0))
-				temp_maze[c] = rand(2).to_s
-			end
-		end
-		load(temp_maze)
-	end
 end
