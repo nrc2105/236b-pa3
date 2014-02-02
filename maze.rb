@@ -29,15 +29,17 @@ class Maze
 	def find_node_adjacency
 		@maze_array.each_index do |j|
 			@maze_array[j].each_index do |i|
-				connect(@maze_array[j - 1][i], @maze_array[j + 1][i]) if j.even? and @maze_array[j][i] == " "
-				connect(@maze_array[j][i -1], @maze_array[j][i + 1]) if i.even? and @maze_array[j][i] == " "
+				connect(@maze_array[j - 1][i], @maze_array[j + 1][i]) if @maze_array[j][i] == " "
+				connect(@maze_array[j][i -1], @maze_array[j][i + 1]) if @maze_array[j][i] == " "
 			end
 		end
 	end
 
 	def connect(node1, node2)
-		node1.add_adjacent(node2)
-		node2.add_adjacent(node1)
+		if node1.class == Node
+			node1.add_adjacent(node2)
+			node2.add_adjacent(node1)
+		end
 	end
 
 	def construct_default_maze_string
