@@ -2,7 +2,7 @@
 require_relative 'node'
 
 class MazeSolver
-
+	DIRECTIONS = [:up, :down, :left, :right]
 	attr_reader :nodes
 	def initialize(width, height, maze)
 		@maze_array = maze
@@ -24,6 +24,13 @@ class MazeSolver
 		node.add_adjacent(@nodes[node.y][node.x - 1]) if @maze_array[node.y * 2 + 1][node.x * 2] == " "
 	end
 
+	def neighbor(x, y, direction)
+		@node[y - 1][x] if direction == :up
+		@node[y + 1][x] if direction == :down
+		@node[y][x + 1] if direction == :right
+		@node[y][x - 1] if direction == :left
+	end
+	
 	def solve(begX, begY, endX, endY)
 		clear_all
 		@nodes[begY][begX].visit(nil)
