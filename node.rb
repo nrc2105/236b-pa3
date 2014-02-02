@@ -1,11 +1,9 @@
 class Node
 
-	attr_reader :x, :y, :mazex, :mazey :adjacent, :predecessor, :visited
-	def initialize(x, y, mazex, mazey)
+	attr_reader :x, :y,:adjacent, :predecessor, :visited
+	def initialize(x, y)
 		@x = x
 		@y = y
-		@mazex = mazex
-		@mazey = mazey
 		@adjacent = []
 		@predecessor = nil
 		@visted = false
