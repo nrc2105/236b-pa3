@@ -6,47 +6,7 @@ class MazeSolver
 	attr_reader :nodes
 	def initialize(nodes, maze)
 		@maze_array = maze
-		#@width = (width - 1) / 2
-		#@height = (height - 1) /2
 		@nodes = nodes
-		#construct_graph
-	end
-
-	def construct_node_matrix
-		@nodes.each_index{|j| @nodes[j].each_index{|i| @nodes[j][i] = Node.new(i, j)}}
-		@nodes.each_index{|j| @nodes[j].each_index{|i| find_adjacent(@nodes[j][i])}}
-	end
-
-	def find_adjacent(node)
-		node.adjacent << above(node) if (path(node, above(node)))
-		node.adjacent << below(node) if (path(node, below(node)))
-		node.adjacent << right(node) if (path(node, right(node)))
-		node.adjacent << left(node)  if (path(node, left(node)))
-	end
-
-	def above(node)
-		@nodes[node.y - 1][node.x] unless node.y - 1 < 0
-	end
-
-	def below(node)
-		@nodes[node.y + 1][node.x] unless node.y + 1 >= @height
-	end
-
-	def left(node)
-		@nodes[node.y][node.x - 1] unless node.x - 1 < 0
-	end
-
-	def right(node)
-		@nodes[node.y][node.x + 1] unless node.x + 1 >= @width
-	end
-
-	def path(node1, node2)
-		return false if node1 == nil or node2 == nil
-		if node1.x == node2.x 
-			(@maze_array[node1.y + node2.y + 1][node1.x * 2 + 1] == " ")
-		else
-			(@maze_array[node1.y * 2 + 1][node1.x + node2.x + 1] == " ")
-		end
 	end
 
 	def solve(begX, begY, endX, endY)
