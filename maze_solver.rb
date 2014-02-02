@@ -43,9 +43,9 @@ class MazeSolver
 	def path(node1, node2)
 		return false if node1 == nil or node2 == nil
 		if node1.x == node2.x 
-			return (@maze_array[node1.y + node2.y + 1][node1.x * 2 + 1] == " ")
+			(@maze_array[node1.y + node2.y + 1][node1.x * 2 + 1] == " ")
 		else
-			return (@maze_array[node1.y * 2 + 1][node1.x + node2.x + 1] == " ")
+			(@maze_array[node1.y * 2 + 1][node1.x + node2.x + 1] == " ")
 		end
 	end
 
