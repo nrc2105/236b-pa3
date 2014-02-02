@@ -4,15 +4,15 @@ require_relative 'node'
 class MazeSolver
 	DIRECTIONS = [:up, :down, :left, :right]
 	attr_reader :nodes
-	def initialize(width, height, maze)
+	def initialize(nodes, maze)
 		@maze_array = maze
-		@width = (width - 1) / 2
-		@height = (height - 1) /2
-		@nodes = Array.new(@height){Array.new(@width)}
-		construct_graph
+		#@width = (width - 1) / 2
+		#@height = (height - 1) /2
+		@nodes = nodes
+		#construct_graph
 	end
 
-	def construct_graph
+	def construct_node_matrix
 		@nodes.each_index{|j| @nodes[j].each_index{|i| @nodes[j][i] = Node.new(i, j)}}
 		@nodes.each_index{|j| @nodes[j].each_index{|i| find_adjacent(@nodes[j][i])}}
 	end
@@ -79,7 +79,7 @@ class MazeSolver
 		@nodes.each do |row| 
 			row.each do |node| 
 				node.clear
-				@maze_array[node.y * 2 + 1][node.x * 2 + 1] = " "
+				#@maze_array[node.y * 2 + 1][node.x * 2 + 1] = " "
 			end
 		end
 	end

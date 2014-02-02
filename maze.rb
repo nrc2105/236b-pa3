@@ -1,5 +1,5 @@
 require_relative "maze_solver"
-require_relative"nodes"
+require_relative"node"
 
 class Maze
 
@@ -12,6 +12,7 @@ class Maze
 		@height = m*2 + 1
 		@maze_array = Array.new(@height){Array.new(@width){0}}
 		@maze_string = construct_default_maze_string
+		@nodes = Array.new(@cell_height){Array.new(@cell_width)}
 	end
 
 	#Loads a string of 1s and 0s into the maze_array
@@ -20,17 +21,22 @@ class Maze
 		maze_format(arg)
 		@maze_string.chars.each_index {|c| @maze_array[c / @width][c % @width] = @maze_string[c]}
 		construct_node_array
-		@maze_solver = MazeSolver.new(@maze_array)
+		@maze_solver = MazeSolver.new(@nodes, @maze_array)
 	end
 
 	def construct_node_array
-		@maze_array.each_index{|j| @maze_array[j].each_index{|i| @maze_array[j][i] = Node.new(i, j) if i.odd? and j.odd?}}
+		@nodes.each_index{|j| @nodes[j].each_index{|i| @nodes[j][i] = Node.new(i, j)}}
 		@maze_array.each_index do |j|
-			j.each_index do |i|
-				connect(@maze_array[j + 1][i], @maze_array[j - 1][i] if j.even? and @maze_array[j][i] == " "
-				connect(@maze_array[j][i + 1], @maze_array[j][i - 1] if i.even? and @maze_array[j][i] == " ")
+			@maze_array[j].each_index do |i|
+				connect(@nodes[j / 2][(i-1)/2], @nodes[j / 2 - 1][(i-1)/2]) if j.even? and i.odd? and @maze_array[j][i] == " "
+				connect(@nodes[(j-1)/2][i / 2], @nodes[(j-1)/2][i / 2 - 1]) if i.even? and j.odd? and @maze_array[j][i] == " "
 			end
 		end
+	end
+
+	def connect(node1, node2)
+		node1.add_adjacent(node2)
+		node2.add_adjacent(node1)
 	end
 
 	def construct_default_maze_string
