@@ -13,7 +13,7 @@ class MazeSolver
 	end
 
 	def construct_graph
-		@nodes.each_index{|j| @nodes[j].each_index{|i| @nodes[j][i] = Node.new(i, j)}}
+		@nodes.each_index{|j| @nodes[j].each_index{|i| @nodes[j][i] = Node.new(i, j, 2 * i + 1, 2 * j + 1)}}
 		@nodes.each_index{|j| @nodes[j].each_index{|i| find_adjacent(@nodes[j][i])}}
 	end
 
@@ -43,9 +43,9 @@ class MazeSolver
 	def path(node1, node2)
 		return false if node1 == nil or node2 == nil
 		if node1.x == node2.x 
-			return (@maze_array[node1.y + node2.y + 1][node1.x * 2 + 1] == " ")
+			return (@maze_array[node1.y + node2.y + 1][node1.mazex] == " ")
 		else
-			return (@maze_array[node1.y * 2 + 1][node1.x + node2.x + 1] == " ")
+			return (@maze_array[node1.mazey][node1.x + node2.x + 1] == " ")
 		end
 	end
 
@@ -68,7 +68,7 @@ class MazeSolver
 		node = @nodes[endY][endX]
 		if solve(begX, begY, endX, endY)
 			begin
-				@maze_array[node.y * 2 + 1][node.x * 2 + 1] = "X"
+				@maze_array[node.mazey][node.mazex] = "X"
 			end while node = node.predecessor
 		else
 			puts "No Solution"
