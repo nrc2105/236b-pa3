@@ -1,4 +1,5 @@
 require_relative "maze_solver"
+require_relative"nodes"
 
 class Maze
 
@@ -18,7 +19,18 @@ class Maze
 		raise RuntimeError.new("Wrong size") if arg.size != @width*@height
 		maze_format(arg)
 		@maze_string.chars.each_index {|c| @maze_array[c / @width][c % @width] = @maze_string[c]}
-		@maze_solver = MazeSolver.new(@width, @height, @maze_array)
+		construct_node_array
+		@maze_solver = MazeSolver.new(@maze_array)
+	end
+
+	def construct_node_array
+		@maze_array.each_index{|j| @maze_array[j].each_index{|i| @maze_array[j][i] = Node.new(i, j) if i.odd? and j.odd?}}
+		@maze_array.each_index do |j|
+			j.each_index do |i|
+				connect(@maze_array[j + 1][i], @maze_array[j - 1][i] if j.even? and @maze_array[j][i] == " "
+				connect(@maze_array[j][i + 1], @maze_array[j][i - 1] if i.even? and @maze_array[j][i] == " ")
+			end
+		end
 	end
 
 	def construct_default_maze_string
