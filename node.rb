@@ -10,13 +10,12 @@ class Node
 	end
 
 	def add_adjacent(node)
-		@adjacent << node
+		@adjacent << node unless node == nil
 	end
 
 	def visit(predecessor)
 		@predecessor = predecessor
 		@visited = true
-		#@adjacent.each{|node| node.visit(self) if !node.visited}
 	end
 
 	def clear
