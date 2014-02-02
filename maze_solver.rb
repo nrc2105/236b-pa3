@@ -39,7 +39,6 @@ class MazeSolver
 		@nodes.each do |row| 
 			row.each do |node| 
 				node.clear
-				#@maze_array[node.y * 2 + 1][node.x * 2 + 1] = " "
 			end
 		end
 	end

@@ -20,10 +20,14 @@ class Maze
 		raise RuntimeError.new("Wrong size") if arg.size != @width*@height
 		maze_format(arg)
 		@maze_string.chars.each_index {|c| @maze_array[c / @width][c % @width] = @maze_string[c]}
-		@nodes.each_index{|j| @nodes[j].each_index{|i| @nodes[j][i] = Node.new(i, j)}}
-		@maze_array.each_index{|j| @maze_array[j].each_index {|i| @maze_array[j][i] = @nodes[(j-1)/2][(i-1)/2] if j.odd? and i.odd?}}
+		construct_node_matrix
 		find_node_adjacency
 		@maze_solver = MazeSolver.new(@nodes, @maze_array)
+	end
+
+	def construct_node_matrix
+		@nodes.each_index{|j| @nodes[j].each_index{|i| @nodes[j][i] = Node.new(i, j)}}
+		@maze_array.each_index{|j| @maze_array[j].each_index {|i| @maze_array[j][i] = @nodes[(j-1)/2][(i-1)/2] if j.odd? and i.odd?}}
 	end
 
 	def find_node_adjacency
