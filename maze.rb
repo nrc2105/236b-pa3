@@ -27,11 +27,16 @@ class Maze
 
 	#Using the string from load this method builds a matrix of Nodes representing cells and superimposes it on the maze array
 	def construct_node_matrix
-		@maze_string.chars.each_index {|c| @maze_array[c / @width][c % @width] = @maze_string[c]}
+		string_to_maze_matrix
 		@nodes.each_with_index{|row, j| row.each_index{|i| row[i] = Node.new(i, j)}}
 		@maze_array.each_with_index{|row, j| row.each_index {|i| row[i] = @nodes[(j-1)/2][(i-1)/2] if j.odd? and i.odd?}}
 	end
 
+	#Converts the maze_string to a matrix for solving and displaying
+	def string_to_maze_matrix
+		@maze_string.chars.each_index {|c| @maze_array[c / @width][c % @width] = @maze_string[c]}
+	end
+	
 	#Goes through entire maze and determines which cells are connected
 	def find_node_adjacency
 		@maze_array.each_with_index do |row, j|
