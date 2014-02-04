@@ -1,6 +1,5 @@
 require_relative 'maze'
 require_relative 'node'
-
 class MazeDesigner
 	#Takes all relevent maze attributes to restructure
 	def initialize(maze)
@@ -47,7 +46,6 @@ class MazeDesigner
 			end
 		end
 		made_it = (node == @nodes[endY][endX])
-		puts "Final Node = (#{node.x}, #{node.y}) Node reached end: #{made_it}"
 	end
 	#Determines if there is another node in the adjacency list and if so returns a random one
 	def find_next(node)
