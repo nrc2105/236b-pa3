@@ -27,7 +27,7 @@ class Maze
 
 	#Using the string from load this method builds a matrix of Nodes representing cells and superimposes it on the maze array
 	def construct_node_matrix
-		@maze_string.chars.each_index {|c| @maze_array[c / @width][c % @width] = @maze_string[c]}
+		@maze_array.each_with_index {|row, j| row.each_index{|i| row[i] = @maze_string[i + i * j]}}
 		@nodes.each_with_index{|row, j| row.each_index{|i| row[i] = Node.new(i, j)}}
 		@maze_array.each_with_index{|row, j| row.each_index {|i| row[i] = @nodes[(j-1)/2][(i-1)/2] if j.odd? and i.odd?}}
 	end
