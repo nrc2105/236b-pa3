@@ -1,3 +1,4 @@
+#Author: Nicholas Cummins (ncummins@brandeis.edu)
 require_relative 'maze'
 require_relative 'node'
 class MazeDesigner

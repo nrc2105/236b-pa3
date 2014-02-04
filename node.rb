@@ -1,3 +1,5 @@
+#Author: Nicholas Cummins (ncummins@brandeis.edu)
+
 class Node
 	attr_accessor :node_string
 	attr_reader :x, :y,:adjacent, :predecessor, :visited

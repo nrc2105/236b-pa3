@@ -1,3 +1,4 @@
+#Author: Nicholas Cummins (ncummins@brandeis.edu)
 require_relative "maze_solver"
 require_relative "node"
 require_relative "maze_designer"

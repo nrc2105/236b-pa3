@@ -1,3 +1,4 @@
+#Author: Nicholas Cummins (ncummins@brandeis.edu)
 
 require_relative 'node'
 
