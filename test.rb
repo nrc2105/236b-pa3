@@ -18,6 +18,21 @@ m.trace(0,0,3,3)
 
 m.display
 
+m = Maze.new(25, 25)
+
+input = "1" * (51 * 51)
+
+m.load(input)
+
+m.display
+
+m.redesign
+
+m.display
+
+m.trace(0,0,24,24)
+
+m.display
 #m.redesign
 
 #m.display

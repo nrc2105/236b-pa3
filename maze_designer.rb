@@ -15,7 +15,7 @@ class MazeDesigner
 		@maze.construct_default_maze_string
 		@maze.construct_node_matrix
 		connect_all_nodes
-		random_depth_first_search(0,0,@nodes.size[0] - 1, @nodes.size - 1)
+		random_depth_first_search(0,0,@nodes.size - 1, @nodes.size - 1)
 		create_maze_string
 		@maze.load(@maze_string)
 	end
@@ -46,6 +46,8 @@ class MazeDesigner
 				node = node.predecessor
 			end
 		end
+		made_it = (node == @nodes[endY][endX])
+		puts "Final Node = (#{node.x}, #{node.y}) Node reached end: #{made_it}"
 	end
 	#Determines if there is another node in the adjacency list and if so returns a random one
 	def find_next(node)
