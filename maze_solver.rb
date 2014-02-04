@@ -2,13 +2,15 @@
 require_relative 'node'
 
 class MazeSolver
-	DIRECTIONS = [:up, :down, :left, :right]
+
 	attr_reader :nodes
-	def initialize(nodes, maze)
-		@maze_array = maze
+
+	#Initialized with the array of nodes from a maze
+	def initialize(nodes)
 		@nodes = nodes
 	end
 
+	#Solve clears all nodes in case of previous solves, and then uses a BFS to indicate if there is a path
 	def solve(begX, begY, endX, endY)
 		clear_all
 		@nodes[begY][begX].visit(nil)
@@ -23,6 +25,7 @@ class MazeSolver
 		return @nodes[endY][endX].visited
 	end
 
+	#Trace runs solve and uses the predecessor attribute of each node to backtrace the path if there is one
 	def trace(begX, begY, endX, endY)
 		clear_all
 		node = @nodes[endY][endX]
@@ -35,6 +38,7 @@ class MazeSolver
 		end
 	end
 
+	#Clears each node of its 'visited' status and predecessor
 	def clear_all
 		@nodes.each do |row| 
 			row.each do |node| 

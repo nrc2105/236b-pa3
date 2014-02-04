@@ -1,35 +1,38 @@
 require_relative "maze_solver"
-require_relative"node"
+require_relative "node"
+require_relative "maze_designer"
 
 class Maze
 
-	attr_reader :maze_solver, :maze_array
+	attr_reader :maze_solver, :maze_array, :nodes, :width, :height
 	#Initializes the maze with size allowing for walls around all 'chambers'
 	def initialize (n,m)
 		@cell_width = n
 		@cell_height = m
 		@width = n*2 + 1
 		@height = m*2 + 1
+		construct_default_maze_string
 		@maze_array = Array.new(@height){Array.new(@width){0}}
-		@maze_string = construct_default_maze_string
 		@nodes = Array.new(@cell_height){Array.new(@cell_width)}
 	end
 
-	#Loads a string of 1s and 0s into the maze_array
+	#Loads a string of 1s and 0s into the maze_array, then calls the methods to construct the appropriate matrices
 	def load(arg)
 		raise RuntimeError.new("Wrong size") if arg.size != @width*@height
 		maze_format(arg)
-		@maze_string.chars.each_index {|c| @maze_array[c / @width][c % @width] = @maze_string[c]}
 		construct_node_matrix
 		find_node_adjacency
-		@maze_solver = MazeSolver.new(@nodes, @maze_array)
+		@maze_solver = MazeSolver.new(@nodes)
 	end
 
+	#Using the string from load this method builds a matrix of Nodes representing cells and superimposes it on the maze array
 	def construct_node_matrix
+		@maze_string.chars.each_index {|c| @maze_array[c / @width][c % @width] = @maze_string[c]}
 		@nodes.each_with_index{|row, j| row.each_index{|i| row[i] = Node.new(i, j)}}
 		@maze_array.each_with_index{|row, j| row.each_index {|i| row[i] = @nodes[(j-1)/2][(i-1)/2] if j.odd? and i.odd?}}
 	end
 
+	#Goes through entire maze and determines which cells are connected
 	def find_node_adjacency
 		@maze_array.each_with_index do |row, j|
 			row.each_with_index do |element, i|
@@ -39,6 +42,7 @@ class Maze
 		end
 	end
 
+	#If it has been determined that there is a path between two adjacent nodes they are linked
 	def connect(node1, node2)
 		if node1.class == Node
 			node1.add_adjacent(node2)
@@ -46,12 +50,14 @@ class Maze
 		end
 	end
 
+	#Constructs the default look of the maze, with '+-' for horizonal walls and '|' for vertical walls
 	def construct_default_maze_string
 		top = "+-" * @cell_width + "+"
 		body = "|" + (" |" * @cell_width)
-		top + (body + top) * @cell_height
+		@maze_string = top + (body + top) * @cell_height
 	end
 
+	#Takes walls out of the predefined maze (Which has four walls on every cell)
 	def maze_format(arg)
 		arg.chars.each_index {|c| @maze_string[c] = " " if arg[c] == "0"}
 	end
@@ -76,8 +82,13 @@ class Maze
 		@maze_solver.trace(begX, begY, endX, endY)
 	end
 
+	#Resets maze, CHECK IF USED
 	def reset_maze
 		load(@maze_string)
 	end
 
+	#Redesigns the maze
+	def redesign
+		MazeDesigner.new(self).design
+	end
 end

@@ -10,7 +10,11 @@ m.trace(0,0,3,3)
 
 m.display
 
-#.redesign
+m.redesign
+
+m.display
+
+#m.redesign
 
 #m.display
 
