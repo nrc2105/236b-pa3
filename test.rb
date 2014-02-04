@@ -14,6 +14,10 @@ m.redesign
 
 m.display
 
+m.trace(0,0,3,3)
+
+m.display
+
 #m.redesign
 
 #m.display

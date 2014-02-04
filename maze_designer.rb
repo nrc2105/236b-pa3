@@ -2,7 +2,7 @@ require_relative 'maze'
 require_relative 'node'
 
 class MazeDesigner
-
+	#
 	def initialize(maze)
 		@maze = maze
 		@width = maze.width
@@ -10,12 +10,29 @@ class MazeDesigner
 		@nodes = maze.nodes
 		@maze_array = maze.maze_array
 	end
-
+	#
 	def design
 		@maze.construct_default_maze_string
 		@maze.construct_node_matrix
 		connect_all_nodes
 		random_depth_first_search(0,0,@nodes.size[0] - 1, @nodes.size - 1)
+		create_maze_string
+		@maze.load(@maze_string)
+	end
+	#
+	def create_maze_string
+		convert_array_for_load
+		@maze_string = ""
+		@maze_array.each{|row| row.each{|element| @maze_string += element}}
+	end
+	#
+	def convert_array_for_load
+		@maze_array.each do |row| 
+			row.each_index do |i|
+				row[i] = "1" unless row[i].to_s == " "
+				row[i] = "0" if row[i].to_s == " "
+			end
+		end
 	end
 
 	def random_depth_first_search(startX, startY, endX, endY)
@@ -40,7 +57,6 @@ class MazeDesigner
 				return next_node
 			end
 		end
-
 		return false
 	end
 
@@ -83,6 +99,4 @@ class MazeDesigner
 		right_node = @nodes[node.y][node.x + 1] unless node.x + 1 == @nodes[0].size
 		node.add_adjacent(right_node)
 	end
-
-
 end
