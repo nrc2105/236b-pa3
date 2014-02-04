@@ -8,21 +8,50 @@ class MazeDesigner
 		@width = maze.width
 		@height = maze.height
 		@nodes = maze.nodes
+		@maze_array = maze.maze_array
 	end
 
 	def design
 		@maze.construct_default_maze_string
 		@maze.construct_node_matrix
 		connect_all_nodes
-
-		#maze_string = "1" * width
-		#for i in 0..((height * width) - 2 * width - 1)
-	#		maze_string += rand(2).to_s unless i % width == 0 or i % width == width - 1
-	#		maze_string += "1" if i % width == 0 or i % width == width - 1  
-	#	end
-	#	return maze_string += "1" * width
-
+		random_depth_first_search(0,0,@nodes.size[0] - 1, @nodes.size - 1)
 	end
+
+	def random_depth_first_search(startX, startY, endX, endY)
+		node = @nodes[startY][startX]
+		while node != @nodes[endY][endX]
+			if (next_node = find_next(node))
+				next_node.visit(node)
+				knock_down_wall(node, next_node)
+				node = next_node
+			else
+				node = node.predecessor
+			end
+		end
+	end
+
+	def find_next(node)
+		while node.adjacent.size > 0
+			next_node = node.adjacent[rand(node.adjacent.size)]
+			if next_node.visited
+				node.adjacent.delete(next_node)
+			else
+				return next_node
+			end
+		end
+
+		return false
+	end
+
+	def knock_down_wall(node1, node2)
+		if node1.x == node2.x
+			@maze_array[node1.y + node2.y + 1][node1.x * 2 + 1] = " "
+		else
+			@maze_array[node1.y * 2 + 1][node1.x + node2.x + 1] = " "
+		end
+	end
+
 
 	def connect_all_nodes
 		@nodes.each do |row|
